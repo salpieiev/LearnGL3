@@ -18,7 +18,7 @@
 
 @property (strong, nonatomic) EAGLContext *context;
 
-- (void)drawView;
+- (void)drawView:(CADisplayLink *)displayLink;
 
 @end
 
@@ -62,7 +62,9 @@
         
         [self.context renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
         
-        [self drawView];
+        // Create display link
+        CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView:)];
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     return self;
 }
@@ -76,7 +78,7 @@
 
 #pragma mark - Private Methods
 
-- (void)drawView
+- (void)drawView:(CADisplayLink *)displayLink
 {
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
