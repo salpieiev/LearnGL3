@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GLView.h"
 
 
 
@@ -16,7 +17,10 @@
 {
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     
+    GLView *glView = [[GLView alloc] initWithFrame:screenBounds];
+    
     self.window = [[UIWindow alloc] initWithFrame:screenBounds];
+    [self.window addSubview:glView];
     [self.window makeKeyAndVisible];
     
     return YES;

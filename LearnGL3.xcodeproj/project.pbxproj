@@ -16,6 +16,9 @@
 		B451A865172006C800F056FB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B451A864172006C800F056FB /* Default.png */; };
 		B451A867172006C800F056FB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B451A866172006C800F056FB /* Default@2x.png */; };
 		B451A869172006C800F056FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B451A868172006C800F056FB /* Default-568h@2x.png */; };
+		B451A871172014B700F056FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B451A870172014B700F056FB /* QuartzCore.framework */; };
+		B451A873172014BD00F056FB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B451A872172014BD00F056FB /* OpenGLES.framework */; };
+		B451A87B17201A1400F056FB /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = B451A87A17201A1400F056FB /* GLView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,10 @@
 		B451A864172006C800F056FB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		B451A866172006C800F056FB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B451A868172006C800F056FB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B451A870172014B700F056FB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B451A872172014BD00F056FB /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B451A87917201A1400F056FB /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
+		B451A87A17201A1400F056FB /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B451A873172014BD00F056FB /* OpenGLES.framework in Frameworks */,
+				B451A871172014B700F056FB /* QuartzCore.framework in Frameworks */,
 				B451A853172006C800F056FB /* UIKit.framework in Frameworks */,
 				B451A855172006C800F056FB /* Foundation.framework in Frameworks */,
 				B451A857172006C800F056FB /* CoreGraphics.framework in Frameworks */,
@@ -71,6 +80,8 @@
 				B451A852172006C800F056FB /* UIKit.framework */,
 				B451A854172006C800F056FB /* Foundation.framework */,
 				B451A856172006C800F056FB /* CoreGraphics.framework */,
+				B451A872172014BD00F056FB /* OpenGLES.framework */,
+				B451A870172014B700F056FB /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -78,8 +89,8 @@
 		B451A858172006C800F056FB /* LearnGL3 */ = {
 			isa = PBXGroup;
 			children = (
-				B451A861172006C800F056FB /* AppDelegate.h */,
-				B451A862172006C800F056FB /* AppDelegate.m */,
+				B451A8741720195F00F056FB /* Views */,
+				B451A86F1720140E00F056FB /* Main */,
 				B451A859172006C800F056FB /* Supporting Files */,
 			);
 			path = LearnGL3;
@@ -97,6 +108,32 @@
 				B451A868172006C800F056FB /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B451A86F1720140E00F056FB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B451A861172006C800F056FB /* AppDelegate.h */,
+				B451A862172006C800F056FB /* AppDelegate.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		B451A8741720195F00F056FB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B451A8751720196400F056FB /* OpenGLView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B451A8751720196400F056FB /* OpenGLView */ = {
+			isa = PBXGroup;
+			children = (
+				B451A87917201A1400F056FB /* GLView.h */,
+				B451A87A17201A1400F056FB /* GLView.m */,
+			);
+			name = OpenGLView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +203,7 @@
 			files = (
 				B451A85F172006C800F056FB /* main.m in Sources */,
 				B451A863172006C800F056FB /* AppDelegate.m in Sources */,
+				B451A87B17201A1400F056FB /* GLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +318,7 @@
 				B451A86E172006C800F056FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
