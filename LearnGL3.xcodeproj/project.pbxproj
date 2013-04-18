@@ -19,6 +19,8 @@
 		B451A871172014B700F056FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B451A870172014B700F056FB /* QuartzCore.framework */; };
 		B451A873172014BD00F056FB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B451A872172014BD00F056FB /* OpenGLES.framework */; };
 		B451A87B17201A1400F056FB /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = B451A87A17201A1400F056FB /* GLView.m */; };
+		B451A87E172038B700F056FB /* SimpleShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B451A87D172038B700F056FB /* SimpleShader.vsh */; };
+		B451A880172038CB00F056FB /* SimpleShader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = B451A87F172038CB00F056FB /* SimpleShader.fsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		B451A872172014BD00F056FB /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B451A87917201A1400F056FB /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
 		B451A87A17201A1400F056FB /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
+		B451A87D172038B700F056FB /* SimpleShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SimpleShader.vsh; sourceTree = "<group>"; };
+		B451A87F172038CB00F056FB /* SimpleShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SimpleShader.fsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 		B451A858172006C800F056FB /* LearnGL3 */ = {
 			isa = PBXGroup;
 			children = (
+				B451A87C1720388400F056FB /* Shaders */,
 				B451A8741720195F00F056FB /* Views */,
 				B451A86F1720140E00F056FB /* Main */,
 				B451A859172006C800F056FB /* Supporting Files */,
@@ -134,6 +139,15 @@
 				B451A87A17201A1400F056FB /* GLView.m */,
 			);
 			name = OpenGLView;
+			sourceTree = "<group>";
+		};
+		B451A87C1720388400F056FB /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B451A87D172038B700F056FB /* SimpleShader.vsh */,
+				B451A87F172038CB00F056FB /* SimpleShader.fsh */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +205,7 @@
 				B451A865172006C800F056FB /* Default.png in Resources */,
 				B451A867172006C800F056FB /* Default@2x.png in Resources */,
 				B451A869172006C800F056FB /* Default-568h@2x.png in Resources */,
+				B451A87E172038B700F056FB /* SimpleShader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +219,7 @@
 				B451A85F172006C800F056FB /* main.m in Sources */,
 				B451A863172006C800F056FB /* AppDelegate.m in Sources */,
 				B451A87B17201A1400F056FB /* GLView.m in Sources */,
+				B451A880172038CB00F056FB /* SimpleShader.fsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
