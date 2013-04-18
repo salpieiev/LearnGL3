@@ -294,12 +294,10 @@
 		B451A86D172006C800F056FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bill Campbell (P9TH4UDT54)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LearnGL3/LearnGL3-Prefix.pch";
 				INFOPLIST_FILE = "LearnGL3/LearnGL3-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "39A946C8-AAAA-4F8B-8770-574C3CCBC129";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -307,12 +305,10 @@
 		B451A86E172006C800F056FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bill Campbell (P9TH4UDT54)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LearnGL3/LearnGL3-Prefix.pch";
 				INFOPLIST_FILE = "LearnGL3/LearnGL3-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "39A946C8-AAAA-4F8B-8770-574C3CCBC129";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

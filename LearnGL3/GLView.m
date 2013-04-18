@@ -49,8 +49,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        CGFloat scale = [UIScreen mainScreen].scale;
+        
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
         eaglLayer.opaque = YES;
+        eaglLayer.contentsScale = scale;
         
         self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         
@@ -68,7 +71,7 @@
         
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderbuffer);
         
-        glViewport(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
+        glViewport(0, 0, CGRectGetWidth(frame) * scale, CGRectGetHeight(frame) * scale);
         
         [self.context renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
         
