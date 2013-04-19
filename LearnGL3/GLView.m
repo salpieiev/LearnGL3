@@ -22,6 +22,13 @@
     GLuint _program;
     GLint _attribPosition;
     GLint _attribColor;
+    
+    GLuint _resolveFramebuffer;
+    GLuint _multisampleFramebuffer;
+    
+    GLuint _resolveColorRenderbuffer;
+    GLuint _multisampleColorRenderbuffer;
+    GLuint _multisampleDepthStencilRenderbuffer;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -61,19 +68,34 @@
             return nil;
         }
         
-        GLuint renderbuffer;
-        glGenRenderbuffers(1, &renderbuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+        CGFloat width = CGRectGetWidth(frame) * scale;
+        CGFloat height = CGRectGetHeight(frame) * scale;
         
-        GLuint framebuffer;
-        glGenFramebuffers(1, &framebuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-        
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderbuffer);
-        
-        glViewport(0, 0, CGRectGetWidth(frame) * scale, CGRectGetHeight(frame) * scale);
-        
+        // Resolve framebuffer
+        glGenRenderbuffers(1, &_resolveColorRenderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, _resolveColorRenderbuffer);
         [self.context renderbufferStorage:GL_RENDERBUFFER fromDrawable:eaglLayer];
+        
+        glGenFramebuffers(1, &_resolveFramebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, _resolveFramebuffer);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _resolveColorRenderbuffer);
+        
+        glViewport(0, 0, width, height);
+        
+        // Creating the multisample buffer
+        glGenFramebuffers(1, &_multisampleFramebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, _multisampleFramebuffer);
+        
+        glGenRenderbuffers(1, &_multisampleColorRenderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, _multisampleColorRenderbuffer);
+        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, 4, GL_RGBA8_OES, width, height);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _multisampleColorRenderbuffer);
+        
+        glGenRenderbuffers(1, &_multisampleDepthStencilRenderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, _multisampleDepthStencilRenderbuffer);
+        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8_OES, width, height);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _multisampleDepthStencilRenderbuffer);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _multisampleDepthStencilRenderbuffer);
         
         // Create display link
         CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView:)];
@@ -134,12 +156,28 @@
 
 - (void)drawView:(CADisplayLink *)displayLink
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, _multisampleFramebuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _multisampleColorRenderbuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _multisampleDepthStencilRenderbuffer);
+    
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     
     [self drawTriangle];
     
-    [self createSnapshotIfNeeded];
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, _resolveFramebuffer);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, _multisampleFramebuffer);
+    glResolveMultisampleFramebufferAPPLE();
+    
+    const GLenum discards[] =
+    {
+        GL_COLOR_ATTACHMENT0,
+        GL_DEPTH_ATTACHMENT,
+        GL_STENCIL_ATTACHMENT
+    };
+    glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 3, discards);
+    
+    glBindRenderbuffer(GL_RENDERBUFFER, _resolveColorRenderbuffer);
     
     [self.context presentRenderbuffer:GL_RENDERBUFFER];
 }
