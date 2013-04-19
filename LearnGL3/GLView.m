@@ -177,7 +177,10 @@
     };
     glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 3, discards);
     
+    glBindFramebuffer(GL_FRAMEBUFFER, _resolveFramebuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _resolveColorRenderbuffer);
+    
+    [self createSnapshotIfNeeded];
     
     [self.context presentRenderbuffer:GL_RENDERBUFFER];
 }
