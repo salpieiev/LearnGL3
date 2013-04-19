@@ -20,6 +20,7 @@
 		B451A873172014BD00F056FB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B451A872172014BD00F056FB /* OpenGLES.framework */; };
 		B451A87B17201A1400F056FB /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = B451A87A17201A1400F056FB /* GLView.m */; };
 		B451A87E172038B700F056FB /* SimpleShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B451A87D172038B700F056FB /* SimpleShader.vsh */; };
+		B460AFC81721941A002012D5 /* tile_floor.png in Resources */ = {isa = PBXBuildFile; fileRef = B460AFC71721941A002012D5 /* tile_floor.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		B451A87A17201A1400F056FB /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
 		B451A87D172038B700F056FB /* SimpleShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SimpleShader.vsh; sourceTree = "<group>"; };
 		B451A87F172038CB00F056FB /* SimpleShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SimpleShader.fsh; sourceTree = "<group>"; };
+		B460AFC71721941A002012D5 /* tile_floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_floor.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				B451A858172006C800F056FB /* LearnGL3 */,
+				B460AFC5172193D3002012D5 /* Resources */,
 				B451A851172006C800F056FB /* Frameworks */,
 				B451A850172006C800F056FB /* Products */,
 			);
@@ -149,6 +152,22 @@
 			path = Shaders;
 			sourceTree = "<group>";
 		};
+		B460AFC5172193D3002012D5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B460AFC6172193E7002012D5 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B460AFC6172193E7002012D5 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B460AFC71721941A002012D5 /* tile_floor.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,6 +224,7 @@
 				B451A867172006C800F056FB /* Default@2x.png in Resources */,
 				B451A869172006C800F056FB /* Default-568h@2x.png in Resources */,
 				B451A87E172038B700F056FB /* SimpleShader.vsh in Resources */,
+				B460AFC81721941A002012D5 /* tile_floor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
