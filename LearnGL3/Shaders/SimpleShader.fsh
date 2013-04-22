@@ -1,11 +1,15 @@
 const char *SimpleFragmentShader = STRINGIFY
 (
+ 
+ precision mediump float;
 
-varying highp vec4 v_color;
+uniform sampler2D u_sampler;
+
+varying vec2 v_texCoord;
 
 void main()
 {
-    gl_FragColor = v_color;
+    gl_FragColor = texture2D(u_sampler, v_texCoord);
 }
 
 );

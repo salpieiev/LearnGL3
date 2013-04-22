@@ -21,7 +21,8 @@
 @interface GLView () {
     GLuint _program;
     GLint _attribPosition;
-    GLint _attribColor;
+    GLint _attribTexCoord;
+    GLuint _texture;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -94,11 +95,39 @@
         glAttachShader(_program, vertexShader);
         glAttachShader(_program, fragmentShader);
         glLinkProgram(_program);
+        glUseProgram(_program);
+        
+        GLint linkSuccess;
+        glGetProgramiv(_program, GL_LINK_STATUS, &linkSuccess);
+        
+        if (linkSuccess == GL_FALSE)
+        {
+            GLint infoLength;
+            glGetProgramiv(_program, GL_INFO_LOG_LENGTH, &infoLength);
+            
+            if (infoLength > 1)
+            {
+                char *infoLog = (char *)malloc(sizeof(char) *infoLength);
+                glGetProgramInfoLog(_program, infoLength, NULL, infoLog);
+                
+                NSString *info = [NSString stringWithCString:infoLog encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", info);
+            }
+        }
         
         _attribPosition = glGetAttribLocation(_program, "a_position");
-        _attribColor = glGetAttribLocation(_program, "a_color");
+        _attribTexCoord = glGetAttribLocation(_program, "a_texCoord");
         
-        glUseProgram(_program);
+        // Generate texture
+        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"tile_floor" ofType:@"png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+        CFDataRef dataRef = CGDataProviderCopyData(CGImageGetDataProvider(image.CGImage));
+        
+        glGenTextures(1, &_texture);
+        glBindTexture(GL_TEXTURE_2D, _texture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1024, 1024, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void *)CFDataGetBytePtr(dataRef));
     }
     return self;
 }
@@ -125,6 +154,8 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     self.createSnapshot = YES;
+    
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, 512, 512, 0);
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -149,22 +180,26 @@
 - (void)drawTriangle
 {
     glEnableVertexAttribArray(_attribPosition);
-    glEnableVertexAttribArray(_attribColor);
+    glEnableVertexAttribArray(_attribTexCoord);
     
     GLfloat vertices[] =
     {
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        
+        1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
     
-    glVertexAttribPointer(_attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, vertices);
-    glVertexAttribPointer(_attribColor, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, &vertices[3]);
+    glVertexAttribPointer(_attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, vertices);
+    glVertexAttribPointer(_attribTexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, &vertices[3]);
     
-    glDrawArrays(GL_LINE_LOOP, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     
     glDisableVertexAttribArray(_attribPosition);
-    glDisableVertexAttribArray(_attribColor);
+    glDisableVertexAttribArray(_attribTexCoord);
 }
 
 - (UIImage *)snapshot
